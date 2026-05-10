@@ -7,6 +7,7 @@ interface ScrollySceneProps {
   label?: string;
   children: React.ReactNode;
   delay?: number;
+  dark?: boolean;
 }
 
 export default function ScrollyScene({
@@ -14,6 +15,7 @@ export default function ScrollyScene({
   label = "Scene",
   children,
   delay = 0,
+  dark = false,
 }: ScrollySceneProps) {
   const ref = useRef<HTMLElement>(null);
 
@@ -23,30 +25,27 @@ export default function ScrollyScene({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.style.transitionDelay = `${delay}ms`;
-          el.classList.add("scrolly-visible");
+          setTimeout(() => el.classList.add("scrolly-visible"), delay);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.1, rootMargin: "0px 0px -60px 0px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, [delay]);
 
   return (
-    <section
-      ref={ref}
-      className="scrolly-scene"
-    >
-      {/* Rail: number + label */}
+    <section ref={ref} className="scrolly-scene">
+      {/* Rail: number · divider line · label */}
       <div className="scrolly-rail">
         <span className="scrolly-number">{number}</span>
+        <span className="scrolly-rail-line" />
         <span className="scrolly-label">{label}</span>
       </div>
 
-      {/* Card content */}
-      <article className="scrolly-card">
+      {/* Card */}
+      <article className={`scrolly-card${dark ? " scrolly-card--dark" : ""}`}>
         {children}
       </article>
     </section>

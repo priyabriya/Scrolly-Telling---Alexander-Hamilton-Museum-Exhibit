@@ -22,7 +22,7 @@ export default function ThesisFrame({ id, eyebrow, lead, body }: ThesisFrameProp
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -30,10 +30,8 @@ export default function ThesisFrame({ id, eyebrow, lead, body }: ThesisFrameProp
 
   return (
     <div id={id} className="thesis-frame">
-      <div ref={ref} className="scrolly-scene thesis-inner">
-        {eyebrow && (
-          <p className="thesis-eyebrow">{eyebrow}</p>
-        )}
+      <div ref={ref} className="thesis-inner scrolly-scene">
+        {eyebrow && <p className="thesis-eyebrow">{eyebrow}</p>}
         <p className="thesis-lead">{lead}</p>
         {body && <p className="thesis-body">{body}</p>}
       </div>

@@ -29,12 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Nav />
         {children}
-        <footer className="bg-[#1a1208] text-[#e8d9b8] px-6 md:px-10 py-8 border-t-2 border-[#b8860b] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <span className="font-display text-[0.75rem] tracking-widest text-[#d4a843]">
-            Alexander Hamilton — Power of the Pen
-          </span>
-          <span className="font-quill italic text-[0.85rem] opacity-50">
-            Sources: National Archives, Library of Congress, NPS, Wikipedia.
+        <footer className="site-footer">
+          <span className="site-footer__brand">Alexander Hamilton — Power of the Pen</span>
+          <span className="site-footer__credits">
+            Sources: National Archives · Library of Congress · NPS · Wikipedia
           </span>
         </footer>
       </body>

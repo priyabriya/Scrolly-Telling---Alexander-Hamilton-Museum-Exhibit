@@ -24,11 +24,7 @@ export default function EmphasisBand({ stats }: { stats: readonly Stat[] }) {
       },
       { threshold: 0.2 }
     );
-
-    refs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
+    refs.current.forEach((el) => { if (el) observer.observe(el); });
     return () => observer.disconnect();
   }, []);
 
@@ -39,7 +35,7 @@ export default function EmphasisBand({ stats }: { stats: readonly Stat[] }) {
           <div
             key={s.label}
             ref={(el) => { refs.current[i] = el; }}
-            data-delay={i * 100}
+            data-delay={i * 120}
             className="emphasis-card"
           >
             <div className="emphasis-card__value">{s.value}</div>
