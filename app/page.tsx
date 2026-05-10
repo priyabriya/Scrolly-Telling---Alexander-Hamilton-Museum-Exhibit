@@ -1,85 +1,155 @@
 import Hero from "@/components/Hero";
-import ArtifactCard from "@/components/ArtifactCard";
-import TimelineList from "@/components/TimelineList";
+import ScrollyScene from "@/components/ScrollyScene";
+import ThesisFrame from "@/components/ThesisFrame";
 import AudienceCard from "@/components/AudienceCard";
-import SectionLabel from "@/components/SectionLabel";
+import EmphasisBand from "@/components/EmphasisBand";
 import Link from "next/link";
 import { artifacts, timelineEvents, audienceCards, siteConfig } from "@/lib/data";
 
 export default function Home() {
   return (
     <main>
-      {/* ── Hero ── */}
+      {/* ── 1. Full-screen scrollytelling hero ── */}
       <Hero />
 
-      {/* ── About ── */}
-      <section id="about" className="bg-[#fdf6e3] border-t border-b border-[#e8d9b8] py-20 px-6 md:px-16">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.6fr] gap-16 items-start">
+      {/* ── 2. Thesis frame ── */}
+      <ThesisFrame
+        id="thesis"
+        eyebrow="The Founding Argument"
+        lead="One man. One pen. A nation built from words."
+        body="From St. Croix to the Treasury — Hamilton's story is the original American story of radical self-invention, extraordinary output, and fatal ambition."
+      />
 
-          {/* Sticky aside */}
-          <div className="md:sticky md:top-20">
-            <SectionLabel label="The Exhibit" heading="Ambition Written into History" />
-            <div className="flex flex-col gap-8 mt-2">
-              {siteConfig.stats.map((s) => (
-                <div key={s.label} className="border-l-[3px] border-[#b8860b] pl-5">
-                  <div className="font-display text-[2rem] text-[#8b3a1e] leading-none">{s.value}</div>
-                  <div className="font-serif text-[0.75rem] tracking-[0.12em] uppercase text-[#1a1208] mt-1" style={{ opacity: 0.65 }}>
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* ── 3. Emphasis band: key stats ── */}
+      <EmphasisBand stats={siteConfig.stats} />
+
+      {/* ── 4. Artifacts as numbered scrolly scenes ── */}
+      <section id="artifacts" className="scrolly-stack">
+        <div className="scrolly-stack__inner">
+
+          <div className="scrolly-stack__header scrolly-scene">
+            <p className="section-label-eyebrow">Primary Sources &amp; Sites</p>
+            <h2
+              className="font-display"
+              style={{
+                fontFamily: "Cinzel Decorative, serif",
+                fontSize: "clamp(1.2rem, 3vw, 1.75rem)",
+                color: "#1a1208",
+                lineHeight: 1.25,
+                margin: "0 0 0.5rem",
+              }}
+            >
+              Documents That Built a Nation
+            </h2>
+            <div className="section-label-rule" />
           </div>
 
-          {/* Body copy */}
-          <div className="font-serif text-[1.02rem] text-[#1a1208] space-y-5 leading-relaxed">
-            <p>
-              This exhibit traces Alexander Hamilton&rsquo;s extraordinary arc through the lens of his
-              writings and the institutions he created. Born into poverty in the West Indies, Hamilton
-              rose to become the architect of the United States&rsquo; financial system, the founder of
-              the Coast Guard, and the author of more than half of <em>The Federalist Papers</em>.
-            </p>
-            <p>
-              His story is one of radical self-invention. At seventeen, a letter describing a
-              devastating hurricane so impressed local leaders in St. Croix that they raised funds to
-              send him to New York for an education. That letter was the first demonstration of what
-              would become his defining weapon: the written word.
-            </p>
-            <p>
-              From that moment forward, Hamilton wielded the pen with the force of a general on a
-              battlefield. He designed financial systems where none existed, argued constitutions into
-              existence, and wrote himself from obscurity into the founding narrative of a nation —
-              all before his death at forty-nine.
-            </p>
-            <p>
-              His influence persists every time we use a ten-dollar bill, trade stocks on a national
-              exchange, or rely on the institutions he built from scratch. His life is a high-stakes
-              drama of ambition, intellectual brilliance, and a tragic ending that feels urgently modern.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-4">
-              {["American History", "Financial Systems", "Founding Era", "Hamilton Musical", "Primary Sources"].map((tag) => (
+          {artifacts.map((a, i) => (
+            <ScrollyScene
+              key={a.id}
+              number={a.number}
+              label={a.type}
+              delay={i * 60}
+            >
+              {/* Artifact card inside the scene */}
+              <div style={{ position: "relative", overflow: "hidden" }}>
+                {/* Ghost background number */}
                 <span
-                  key={tag}
-                  className="px-3 py-1 border border-[#b8860b] font-serif text-[0.7rem] tracking-widest uppercase text-[#1b2a4a]"
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    top: "0.5rem",
+                    right: "1rem",
+                    fontFamily: "Cinzel Decorative, serif",
+                    fontSize: "4rem",
+                    color: "#e8d9b8",
+                    lineHeight: 1,
+                    userSelect: "none",
+                    pointerEvents: "none",
+                  }}
                 >
-                  {tag}
+                  {a.number}
                 </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ── Artifacts preview ── */}
-      <section id="artifacts" className="bg-[#f5edd8] py-20 px-6 md:px-16">
-        <div className="max-w-6xl mx-auto">
-          <SectionLabel label="Primary Sources & Sites" heading="Documents That Built a Nation" />
-          <div className="grid md:grid-cols-2 gap-[2px] bg-[#b8860b] border-2 border-[#b8860b]">
-            {artifacts.map((a) => (
-              <ArtifactCard key={a.id} artifact={a} />
-            ))}
-          </div>
-          <div className="mt-8 text-center">
+                <p
+                  style={{
+                    fontFamily: "Cormorant Garamond, serif",
+                    fontSize: "0.68rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
+                    color: "#8b3a1e",
+                    marginBottom: "0.75rem",
+                  }}
+                >
+                  {a.type} · {a.year}
+                </p>
+
+                <h3
+                  style={{
+                    fontFamily: "Cinzel Decorative, serif",
+                    fontSize: "1rem",
+                    fontWeight: 400,
+                    color: "#1b2a4a",
+                    marginBottom: "1rem",
+                    lineHeight: 1.35,
+                    maxWidth: "28ch",
+                  }}
+                >
+                  {a.title}
+                </h3>
+
+                <p
+                  style={{
+                    fontFamily: "Cormorant Garamond, serif",
+                    fontSize: "0.98rem",
+                    color: "#1a1208",
+                    opacity: 0.85,
+                    lineHeight: 1.75,
+                    marginBottom: "1rem",
+                  }}
+                >
+                  {a.description}
+                </p>
+
+                <p
+                  style={{
+                    fontFamily: "IM Fell English, Georgia, serif",
+                    fontStyle: "italic",
+                    fontSize: "0.95rem",
+                    color: "#8b3a1e",
+                    paddingTop: "1rem",
+                    borderTop: "1px solid #e8d9b8",
+                    lineHeight: 1.75,
+                    marginBottom: "1.25rem",
+                  }}
+                >
+                  {a.significance}
+                </p>
+
+                <a
+                  href={a.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: "Cormorant Garamond, serif",
+                    fontSize: "0.72rem",
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: "#b8860b",
+                    textDecoration: "none",
+                    borderBottom: "1px solid transparent",
+                    transition: "border-color 0.2s",
+                  }}
+                  className="hover:border-b-[#b8860b]"
+                >
+                  {a.linkLabel} →
+                </a>
+              </div>
+            </ScrollyScene>
+          ))}
+
+          <div style={{ textAlign: "center", marginTop: "1rem" }}>
             <Link
               href="/artifacts"
               className="inline-block px-8 py-3 border border-[#b8860b] font-serif text-[0.8rem] tracking-[0.15em] uppercase text-[#b8860b] hover:bg-[#b8860b] hover:text-[#fdf6e3] transition-colors no-underline"
@@ -90,12 +160,73 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Timeline preview ── */}
-      <section id="timeline" className="bg-[#1b2a4a] py-20 px-6 md:px-16">
-        <div className="max-w-4xl mx-auto">
-          <SectionLabel label="Chronology" heading="From St. Croix to the Treasury" light />
-          <TimelineList events={timelineEvents.slice(0, 4)} />
-          <div className="mt-12">
+      {/* ── 5. Timeline as scrolly scenes on dark background ── */}
+      <section id="timeline" className="scrolly-stack" style={{ background: "#1b2a4a", paddingTop: "5rem", paddingBottom: "5rem" }}>
+        <div className="scrolly-stack__inner">
+          <div className="scrolly-stack__header scrolly-scene" style={{ textAlign: "center" }}>
+            <p className="section-label-eyebrow">Chronology</p>
+            <h2
+              style={{
+                fontFamily: "Cinzel Decorative, serif",
+                fontSize: "clamp(1.2rem, 3vw, 1.75rem)",
+                color: "#f5edd8",
+                lineHeight: 1.25,
+                margin: "0 0 0.5rem",
+              }}
+            >
+              From St. Croix to the Treasury
+            </h2>
+            <div className="section-label-rule" style={{ background: "#b8860b", margin: "0.75rem auto 1.5rem" }} />
+          </div>
+
+          {timelineEvents.slice(0, 4).map((ev, i) => (
+            <ScrollyScene
+              key={ev.id}
+              number={String(i + 1).padStart(2, "0")}
+              label="Event"
+              delay={i * 80}
+            >
+              <div>
+                <p
+                  style={{
+                    fontFamily: "Cinzel Decorative, serif",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.2em",
+                    color: "#d4a843",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {ev.year}
+                </p>
+                <h3
+                  style={{
+                    fontFamily: "IM Fell English, Georgia, serif",
+                    fontStyle: "italic",
+                    fontSize: "1.25rem",
+                    color: "#f5edd8",
+                    marginBottom: "0.75rem",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {ev.event}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "Cormorant Garamond, serif",
+                    fontSize: "0.95rem",
+                    color: "#e8d9b8",
+                    opacity: 0.8,
+                    lineHeight: 1.75,
+                    maxWidth: "60ch",
+                  }}
+                >
+                  {ev.detail}
+                </p>
+              </div>
+            </ScrollyScene>
+          ))}
+
+          <div style={{ marginTop: "1rem" }}>
             <Link
               href="/timeline"
               className="inline-block px-8 py-3 border border-[#b8860b] font-serif text-[0.8rem] tracking-[0.15em] uppercase text-[#d4a843] hover:bg-[#b8860b] hover:text-[#1b2a4a] transition-colors no-underline"
@@ -106,15 +237,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Audience preview ── */}
-      <section id="audience" className="bg-[#e8d9b8] py-20 px-6 md:px-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <SectionLabel label="Who This Exhibit Is For" heading="Three Ways In" />
-            <p className="font-quill italic text-[1.1rem] text-[#8b3a1e] max-w-[55ch] mx-auto mt-[-1rem] leading-relaxed">
-              &ldquo;His influence is still felt every time we use a $10 bill or trade stocks. His life
-              is a high-stakes drama of ambition, brilliance, and a tragic ending that feels modern even
-              today.&rdquo;
+      {/* ── 6. Audience cards ── */}
+      <section id="audience" className="scrolly-stack" style={{ background: "#e8d9b8" }}>
+        <div style={{ maxWidth: "56rem", margin: "0 auto" }}>
+          <div className="scrolly-stack__header scrolly-scene" style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+            <p className="section-label-eyebrow">Who This Exhibit Is For</p>
+            <h2
+              style={{
+                fontFamily: "Cinzel Decorative, serif",
+                fontSize: "clamp(1.2rem, 3vw, 1.75rem)",
+                color: "#1a1208",
+                margin: "0 0 0.5rem",
+              }}
+            >
+              Three Ways In
+            </h2>
+            <div className="section-label-rule" style={{ margin: "0.75rem auto 1rem" }} />
+            <p
+              style={{
+                fontFamily: "IM Fell English, Georgia, serif",
+                fontStyle: "italic",
+                fontSize: "1.05rem",
+                color: "#8b3a1e",
+                maxWidth: "52ch",
+                margin: "0 auto",
+                lineHeight: 1.75,
+              }}
+            >
+              &ldquo;His influence is still felt every time we use a $10 bill or trade stocks.&rdquo;
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
@@ -125,9 +275,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Ornament ── */}
-      <div className="bg-[#f5edd8] text-center py-6 font-serif text-[1.2rem] text-[#b8860b]" style={{ opacity: 0.5, letterSpacing: "0.5em" }}>
-        ✦ ✦ ✦
+      {/* ── 7. Closing zone ── */}
+      <div className="closing-zone scrolly-scene">
+        <div className="closing-zone__inner">
+          <p className="closing-zone__label">Begin Your Journey</p>
+          <h2 className="closing-zone__title">The Story Doesn&apos;t End Here</h2>
+          <p className="closing-zone__body">
+            Explore the artifacts, walk the timeline, and discover the man behind the money —
+            the orphan who wrote a nation into existence.
+          </p>
+          <nav className="closing-zone__links">
+            <Link href="/artifacts" className="closing-zone__link">Artifacts Gallery</Link>
+            <Link href="/timeline" className="closing-zone__link">Full Timeline</Link>
+            <Link href="/audience" className="closing-zone__link">Find Your Entry Point</Link>
+          </nav>
+          <p className="closing-zone__ornament">✦ ✦ ✦</p>
+        </div>
       </div>
     </main>
   );

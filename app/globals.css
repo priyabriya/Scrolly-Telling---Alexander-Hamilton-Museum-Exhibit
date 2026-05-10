@@ -43,16 +43,461 @@ body::before {
   font-family: "IM Fell English", Georgia, serif;
 }
 
-/* Animations */
+/* ─────────────────────────────────────────────────────────
+   HERO — full-screen scrollytelling entry
+───────────────────────────────────────────────────────── */
+.scrolly-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b2a4a;
+  overflow: hidden;
+  padding-top: 3.5rem; /* nav height */
+}
+
+.scrolly-hero__bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 40%, #243a60 0%, #1b2a4a 60%, #0f1a30 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6%;
+}
+
+.scrolly-hero__monogram {
+  font-family: "Cinzel Decorative", serif;
+  font-size: clamp(12rem, 30vw, 26rem);
+  color: #b8860b;
+  opacity: 0.06;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.04em;
+}
+
+.scrolly-hero__frame {
+  position: absolute;
+  border: 1px solid #b8860b;
+  pointer-events: none;
+}
+
+.scrolly-hero__frame--outer {
+  inset: 1.5rem;
+  opacity: 0.12;
+}
+
+.scrolly-hero__frame--inner {
+  inset: 2rem;
+  opacity: 0.07;
+}
+
+/* Hero copy */
+.scrolly-hero__copy {
+  position: relative;
+  z-index: 2;
+  max-width: 42rem;
+  padding: 3rem 2rem 3rem clamp(2rem, 8vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-right: auto;
+}
+
+.scrolly-hero__eyebrow {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b8860b;
+  margin: 0;
+}
+
+.scrolly-hero__title {
+  font-family: "Cinzel Decorative", serif;
+  font-size: clamp(2rem, 5.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #f5edd8;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.scrolly-hero__subtitle {
+  display: block;
+  font-family: "IM Fell English", Georgia, serif;
+  font-style: italic;
+  font-size: 0.55em;
+  color: #d4a843;
+  letter-spacing: 0.04em;
+}
+
+.scrolly-hero__dek {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.05rem;
+  color: #e8d9b8;
+  max-width: 38ch;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.scrolly-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.scrolly-hero__pill {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(184, 134, 11, 0.5);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d4a843;
+  background: rgba(184, 134, 11, 0.08);
+}
+
+.scrolly-hero__cta {
+  display: inline-block;
+  width: fit-content;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid #b8860b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d4a843;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+}
+
+.scrolly-hero__cta:hover {
+  background: #b8860b;
+  color: #1b2a4a;
+}
+
+/* Hero quote — lower right */
+.scrolly-hero__quote {
+  position: absolute;
+  bottom: 2.5rem;
+  right: clamp(1.5rem, 6vw, 5rem);
+  max-width: 22ch;
+  text-align: right;
+  z-index: 2;
+}
+
+.scrolly-hero__quote p {
+  font-family: "IM Fell English", Georgia, serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #8b3a1e;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.scrolly-hero__quote cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d4a843;
+  font-style: normal;
+  opacity: 0.75;
+}
+
+/* Scroll hint */
+.scrolly-hero__scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 2;
+}
+
+.scrolly-hero__scroll-line {
+  display: block;
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, transparent, #b8860b);
+  animation: scroll-line 2s ease-in-out infinite;
+}
+
+.scrolly-hero__scroll-text {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #b8860b;
+  opacity: 0.7;
+}
+
+@keyframes scroll-line {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ─────────────────────────────────────────────────────────
+   SCROLLY SCENE — numbered reveal cards
+───────────────────────────────────────────────────────── */
+
+/* Each scene starts invisible and slides up */
+.scrolly-scene {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.scrolly-scene.scrolly-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Section stack container */
+.scrolly-stack {
+  background: #f5edd8;
+  padding: 5rem 1.5rem;
+}
+
+.scrolly-stack__inner {
+  max-width: 56rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.scrolly-stack__header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Rail: number + anchor label */
+.scrolly-rail {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.scrolly-number {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: #b8860b;
+  opacity: 0.6;
+}
+
+.scrolly-label {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8b3a1e;
+  opacity: 0.5;
+}
+
+/* Card */
+.scrolly-card {
+  background: #fdf6e3;
+  border-top: 3px solid #b8860b;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.scrolly-card:hover {
+  box-shadow: 0 8px 32px rgba(27, 42, 74, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────────
+   THESIS FRAME — bold scrolly statement
+───────────────────────────────────────────────────────── */
+.thesis-frame {
+  background: #1b2a4a;
+  padding: 6rem 1.5rem;
+  overflow: hidden;
+}
+
+.thesis-inner {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.thesis-eyebrow {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b8860b;
+  margin: 0 0 1.5rem;
+}
+
+.thesis-lead {
+  font-family: "Cinzel Decorative", serif;
+  font-size: clamp(1.2rem, 3.5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: #f5edd8;
+  margin: 0 0 1.5rem;
+}
+
+.thesis-body {
+  font-family: "IM Fell English", Georgia, serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #e8d9b8;
+  opacity: 0.8;
+  max-width: 38ch;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* ─────────────────────────────────────────────────────────
+   EMPHASIS BAND — stat cards
+───────────────────────────────────────────────────────── */
+.emphasis-band {
+  background: #e8d9b8;
+  padding: 4rem 1.5rem;
+}
+
+.emphasis-band__inner {
+  max-width: 56rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.125rem;
+  background: #b8860b;
+  border: 2px solid #b8860b;
+}
+
+.emphasis-card {
+  background: #fdf6e3;
+  padding: 2rem 1.75rem;
+  opacity: 0;
+  transform: translateY(22px) scale(0.98);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.emphasis-card.scrolly-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.emphasis-card__value {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 2rem;
+  color: #8b3a1e;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.emphasis-card__label {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1208;
+  opacity: 0.65;
+}
+
+/* ─────────────────────────────────────────────────────────
+   CLOSING ZONE
+───────────────────────────────────────────────────────── */
+.closing-zone {
+  background: #0f1a30;
+  padding: 6rem 1.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.closing-zone__inner {
+  max-width: 38rem;
+  margin: 0 auto;
+}
+
+.closing-zone__label {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b8860b;
+  margin: 0 0 1.25rem;
+}
+
+.closing-zone__title {
+  font-family: "Cinzel Decorative", serif;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  color: #f5edd8;
+  line-height: 1.3;
+  margin: 0 0 1rem;
+}
+
+.closing-zone__body {
+  font-family: "IM Fell English", Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: #e8d9b8;
+  opacity: 0.8;
+  line-height: 1.75;
+  margin: 0 0 2.5rem;
+}
+
+.closing-zone__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.closing-zone__link {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid #b8860b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #d4a843;
+  text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+}
+
+.closing-zone__link:hover {
+  background: #b8860b;
+  color: #0f1a30;
+}
+
+.closing-zone__ornament {
+  margin-top: 3.5rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.5em;
+  color: #b8860b;
+  opacity: 0.35;
+}
+
+/* ─────────────────────────────────────────────────────────
+   SHARED PAGE-LEVEL ANIMATIONS
+───────────────────────────────────────────────────────── */
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-in {
@@ -83,7 +528,47 @@ body::before {
   transform: translateX(-20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
+
 .tl-item.visible {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Section label helpers */
+.section-label-eyebrow {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b8860b;
+  margin: 0 0 0.5rem;
+}
+
+.section-label-heading {
+  font-family: "Cinzel Decorative", serif;
+  font-size: clamp(1.2rem, 3vw, 1.75rem);
+  color: #1a1208;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+}
+
+.section-label-rule {
+  width: 2.5rem;
+  height: 2px;
+  background: #b8860b;
+  margin: 0.75rem 0 1.5rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 48rem) {
+  .scrolly-hero__copy {
+    padding: 2rem 1.5rem 6rem;
+  }
+  .scrolly-hero__quote {
+    display: none;
+  }
+  .scrolly-hero__scroll-hint {
+    bottom: 1.5rem;
+  }
 }
